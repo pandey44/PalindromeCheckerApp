@@ -1,35 +1,41 @@
 /**
- * ============================================================
- * MAIN CLASS - UseCase1PalindromeApp
- * ============================================================
- * * Use Case 1: Application Entry & Welcome Message
+ * ==========================================================
+ * MAIN CLASS - PalindromeCheckerApp
+ * ==========================================================
+ * Use Case 2: Hardcoded Palindrome Validation
  * * Description:
- * This class represents the entry point of the
- * Palindrome Checker Management System.
+ * This class demonstrates basic palindrome validation
+ * using a hardcoded string value.
  * * At this stage, the application:
- * - Starts execution from the main() method
- * - Displays a welcome message
- * - Shows application version
- * * No palindrome logic is implemented yet.
- * The goal is to establish a clear startup flow.
- * * @author Alankrit Pandey
- * @version 1.0
+ * - Stores a predefined string
+ * - Compares characters from both ends
+ * - Determines whether the string is a palindrome
+ * - Displays the result on the console
+ * * @author Developer
+ * @version 2.0
  */
-
 public class PalindromeCheckerApp {
 
     /**
-     * Application entry point.
-     * * This is the first method executed by the JVM
-     * when the program starts.
-     * * @param args Command-line arguments
+     * Application entry point for UC2.
+     * @param args Command-line arguments
      */
     public static void main(String[] args) {
-        System.out.println("Welcome to the Palindrome Checker Management System");
+        // Hardcoded string to check
+        String input = "madam";
+        boolean isPalindrome = true;
 
-        System.out.println("Version : 1.0");
+        // Hint applied: Loop only till half of the string length
+        // We compare index i with index (length - 1 - i)
+        for (int i = 0; i < input.length() / 2; i++) {
+            if (input.charAt(i) != input.charAt(input.length() - 1 - i)) {
+                isPalindrome = false;
+                break; // Exit loop early if a mismatch is found
+            }
+        }
 
-        System.out.println("System initialized successfully.");
+        // Console Output
+        System.out.println("Input text: " + input);
+        System.out.println("Is it a Palindrome? : " + isPalindrome);
     }
 }
-
