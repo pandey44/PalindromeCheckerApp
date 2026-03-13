@@ -1,37 +1,52 @@
-import java.util.Stack;
-import java.util.Queue;
-import java.util.LinkedList;
+import java.util.Deque;
+import java.util.ArrayDeque;
 
-public class UseCase6PalindromeCheckerApp {
+/**
+ * =========================================================
+ * MAIN CLASS - PalindromeCheckerApp
+ * =========================================================
+ * * Use Case 7: Deque Based Optimized Palindrome Checker
+ * * Description:
+ * This class validates a palindrome using a Deque
+ * (Double Ended Queue).
+ * * Characters are inserted into the deque and then
+ * compared by removing elements from both ends:
+ * - removeFirst()
+ * - removeLast()
+ * * This avoids reversing the string and provides an
+ * efficient front-to-back comparison approach.
+ * * This use case demonstrates optimal bidirectional
+ * traversal using Deque.
+ * * @author Alankrit Pandey
+ * @version 7.0
+ */
+public class PalindromeCheckerApp {
 
+    /**
+     * Application entry point for UC7.
+     * * @param args Command-line arguments
+     */
     public static void main(String[] args) {
+        // Define the input string
+        String input = "refer";
 
-        // Original string
-        String word = "level";
+        Deque<Character> deque = new ArrayDeque<>();
 
-        // Create Stack and Queue
-        Stack<Character> stack = new Stack<>();
-        Queue<Character> queue = new LinkedList<>();
-
-        for (int i = 0; i < word.length(); i++) {
-            char ch = word.charAt(i);
-            stack.push(ch);      // LIFO
-            queue.add(ch);       // FIFO
+        for (char c : input.toCharArray()) {
+            deque.addLast(c);
         }
 
         boolean isPalindrome = true;
 
-        while (!stack.isEmpty() && !queue.isEmpty()) {
-            if (stack.pop() != queue.remove()) {
+        while (deque.size() > 1) {
+            // Remove from both ends and compare
+            if (deque.removeFirst() != deque.removeLast()) {
                 isPalindrome = false;
                 break;
             }
         }
 
-        if (isPalindrome) {
-            System.out.println(word + " is a Palindrome.");
-        } else {
-            System.out.println(word + " is not a Palindrome.");
-        }
+        System.out.println("Input : " + input);
+        System.out.println("Is Palindrome? : " + isPalindrome);
     }
 }
