@@ -1,9 +1,6 @@
-import java.util.Scanner;
-
 /**
- * UC9: Recursive Palindrome Checker
- * This class validates a palindrome by comparing outer characters
- * and moving inward using recursive calls.
+ * UC10: Case-Insensitive & Space-Ignored Palindrome
+ * This class validates a palindrome after preprocessing the input string.
  */
 public class PalindromeCheckerApp {
 
@@ -11,34 +8,23 @@ public class PalindromeCheckerApp {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Input : ");
-        String input = scanner.nextLine();
+        String original = scanner.nextLine();
 
-        // Remove spaces and convert to lowercase for a robust check
-        String cleanInput = input.replaceAll("\\s+", "").toLowerCase();
+        String normalized = original.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
 
-        boolean result = check(cleanInput, 0, cleanInput.length() - 1);
+        // 2. Apply previous logic (Two-pointer approach/Loop)
+        boolean isPalindrome = true;
+        int length = normalized.length();
 
-        System.out.println("Is Palindrome? : " + result);
+        for (int i = 0; i < length / 2; i++) {
+            if (normalized.charAt(i) != normalized.charAt(length - 1 - i)) {
+                isPalindrome = false;
+                break;
+            }
+        }
+
+        System.out.println("Is Palindrome? : " + isPalindrome);
 
         scanner.close();
-    }
-
-    /**
-     * Recursively checks whether a string is a palindrome.
-     * @param s Input string
-     * @param start Starting index
-     * @param end Ending index
-     * @return true if palindrome, otherwise false
-     */
-    private static boolean check(String s, int start, int end) {
-        if (start >= end) {
-            return true;
-        }
-
-        if (s.charAt(start) != s.charAt(end)) {
-            return false;
-        }
-
-        return check(s, start + 1, end - 1);
     }
 }
