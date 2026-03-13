@@ -1,61 +1,52 @@
+import java.util.Stack;
 import java.util.Scanner;
 
 /**
- * ============================================================
  * MAIN CLASS - PalindromeCheckerApp
- * ============================================================
- * Use Case 11: Object-Oriented Palindrome Service
- * * Description:
- * This class demonstrates palindrome validation using
- * object-oriented design.
- * * The palindrome logic is encapsulated inside a
- * PalindromeService class.
+ * Demonstrates the Strategy Pattern for switching algorithms at runtime.
  */
 public class PalindromeCheckerApp {
-
-    /**
-     * Application entry point for UC11.
-     * @param args Command-line arguments
-     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-
-        PalindromeService service = new PalindromeService();
-
         System.out.print("Input : ");
         String input = scanner.nextLine();
 
-        boolean result = service.checkPalindrome(input);
+        PalindromeStrategy strategy = new StackStrategy();
 
-        System.out.println("Is Palindrome? : " + result);
+        boolean isPalindrome = strategy.check(input);
+        System.out.println("Is Palindrome? : " + isPalindrome);
 
         scanner.close();
     }
 }
 
 /**
- * Service class that contains palindrome logic.
+ * INTERFACE - PalindromeStrategy
+ * Defines the contract for all palindrome checking algorithms.
  */
-class PalindromeService {
+interface PalindromeStrategy {
+    boolean check(String input);
+}
 
-    /**
-     * Checks whether the input string is a palindrome.
-     * @param input Input string
-     * @return true if palindrome, false otherwise
-     */
-    public boolean checkPalindrome(String input) {
+/**
+ * CLASS - StackStrategy
+ * Implements the PalindromeStrategy using a Stack (LIFO).
+ */
+class StackStrategy implements PalindromeStrategy {
 
-        if (input == null) return false;
+    @Override
+    public boolean check(String input) {
+        String cleanInput = input.replaceAll("\\s+", "").toLowerCase();
 
-        int start = 0;
-        int end = input.length() - 1;
+        Stack<Character> stack = new Stack<>();
 
-        while (start < end) {
-            if (input.charAt(start) != input.charAt(end)) {
+        for (char c : cleanInput.toCharArray()) {
+            stack.push(c);
+        }
+        for (char c : cleanInput.toCharArray()) {
+            if (c != stack.pop()) {
                 return false;
             }
-            start++;
-            end--;
         }
 
         return true;
